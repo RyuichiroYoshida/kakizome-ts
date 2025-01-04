@@ -1,4 +1,3 @@
-// app.ts
 const canvas = document.getElementById("drawingCanvas") as HTMLCanvasElement;
 const ctx = canvas.getContext("2d");
 
@@ -46,3 +45,28 @@ if (ctx) {
     isDrawing = false;
   });
 }
+
+/**
+ * @summary Canvasの内容を保存する
+ * @param canvas 保存するCanvas要素
+ */
+const saveCanvas = (canvas: HTMLCanvasElement) => {
+  // Canvasの内容をData URLとして取得
+  const dataUrl = canvas.toDataURL("kakizome/png");
+
+  // URLを生成し、ダウンロードさせる
+  const link = document.createElement("a");
+  link.href = dataUrl;
+  link.download = "kakizome.png";
+  link.click();
+};
+
+// 保存ボタンの作成
+const saveButton = document.createElement("button");
+saveButton.textContent = "保存";
+document.body.appendChild(saveButton);
+
+// 保存ボタンのクリックイベントを登録
+saveButton.addEventListener("click", () => {
+  saveCanvas(canvas);
+});
