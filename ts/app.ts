@@ -52,13 +52,14 @@ if (ctx) {
  */
 const saveCanvas = (canvas: HTMLCanvasElement) => {
   // Canvasの内容をData URLとして取得
-  const dataUrl = canvas.toDataURL("kakizome/png");
+  //const dataUrl = canvas.toDataURL("kakizome/png");
+  fetchData();
 
-  // URLを生成し、ダウンロードさせる
-  const link = document.createElement("a");
-  link.href = dataUrl;
-  link.download = "kakizome.png";
-  link.click();
+  // ブラウザ上にURLを生成、ダウンロードさせる
+  // const link = document.createElement("a");
+  // link.href = dataUrl;
+  // link.download = "kakizome.png";
+  // link.click();
 };
 
 // 保存ボタンの作成
@@ -70,3 +71,18 @@ document.body.appendChild(saveButton);
 saveButton.addEventListener("click", () => {
   saveCanvas(canvas);
 });
+
+const webhookUrl = "test";
+async function fetchData() {
+  try {
+    const dataUrl = canvas.toDataURL("kakizome/png");
+    const blob = await fetch(dataUrl).then((res) => res.blob());
+    const formData = new FormData();
+    formData.append("file", blob, "kakizome.png");
+
+    const response = fetch(webhookUrl, {
+      method: "POST",
+      body: formData,
+    });
+  } catch (error) {}
+}
