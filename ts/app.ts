@@ -56,14 +56,12 @@ if (ctx) {
  */
 const saveCanvas = (canvas: HTMLCanvasElement) => {
   // Canvasの内容をData URLとして取得
-  //const dataUrl = canvas.toDataURL("kakizome/png");
-  fetchData();
-
+  const dataUrl = canvas.toDataURL("kakizome/png");
   // ブラウザ上にURLを生成、ダウンロードさせる
-  // const link = document.createElement("a");
-  // link.href = dataUrl;
-  // link.download = "kakizome.png";
-  // link.click();
+  const link = document.createElement("a");
+  link.href = dataUrl;
+  link.download = "kakizome.png";
+  link.click();
 };
 
 // 保存ボタンの作成
@@ -76,8 +74,9 @@ saveButton.addEventListener("click", () => {
   saveCanvas(canvas);
 });
 
-const webhookUrl = "test";
-async function fetchData() {
+const webhookUrl =
+  "test";
+const fetchData = async () => {
   try {
     const dataUrl = canvas.toDataURL("kakizome/png");
     const blob = await fetch(dataUrl).then((res) => res.blob());
@@ -89,4 +88,14 @@ async function fetchData() {
       body: formData,
     });
   } catch (error) {}
-}
+};
+
+// 保存ボタンの作成
+const fetchButton = document.createElement("button");
+fetchButton.textContent = "送信";
+document.body.appendChild(fetchButton);
+
+// 保存ボタンのクリックイベントを登録
+fetchButton.addEventListener("click", () => {
+  fetchData();
+});
