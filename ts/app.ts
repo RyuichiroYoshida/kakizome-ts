@@ -90,12 +90,12 @@ const fetchData = async () => {
   } catch (error) {}
 };
 
-// 保存ボタンの作成
+// 送信ボタンの作成
 const fetchButton = document.createElement("button");
-fetchButton.textContent = "送信";
+fetchButton.textContent = "Discordへ送信";
 document.body.appendChild(fetchButton);
 
-// 保存ボタンのクリックイベントを登録
+// 送信ボタンのクリックイベントを登録
 fetchButton.addEventListener("click", () => {
   fetchData();
 });
